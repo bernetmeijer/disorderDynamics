@@ -13,7 +13,7 @@ import pickle
 from numba import jit, prange
 from joblib import Parallel, delayed
 sys.path.append('./')
-import kpoints
+import kpoints_fcc
 import configparser
 
 configpath = sys.argv[1]
@@ -53,10 +53,13 @@ except:
 # kpoints
 # can optionally give a kvec file with specific k-points. Otherwise calculated all allowed k-points
 try:
-    k_fcc = config['files']['kvec_file']
+    k_file = config['files']['kvec_file']
+    with open(k_file, 'rb') as handle:
+        k_fcc = pickle.load(handle)
 except:
     print('no kvec file found - calculating all allowed k-points')
-    k_fcc = np.array(kpoints.all_k_in_zone(N))
+    k_fcc = np.array(kpoints_fcc.all_k_in_zone(N))
+print('cell mode is {}'.format(MODE))
 if MODE=='primitive':
     M = np.array([[0.5, 0.5, 0.0], [0.0, 0.5, 0.5], [0.5, 0.0, 0.5]])  # reciprocal FCC - P1 transformation matrix
     k_p = []
@@ -285,12 +288,16 @@ def project(k_vecs):
     # get cell coordinates
     with open(cellvecs_file, 'rb') as handle:
         cell_vecs = pickle.load(handle)
+    # expected shape: (Zp, N**3, 3)
+    if np.array(cell_vecs).shape == tuple([N**3, 3]):
+        cell_vecs = np.tile(np.array(cell_vecs), (Zp, 1, 1))
 
     # get exp_array
     exp_array = []
     for vecs in cell_vecs:
         exp, kvecs = make_exponential(N, vecs, k_vecs)
         exp_array.append(exp)
+    exp_array = np.array(exp_array)
 
     # calculate maximum mode we need to project
     max_mode = calculate_max_mode(pfile, N, Z, omegamax)
@@ -300,8 +307,10 @@ def project(k_vecs):
         type_indices = pickle.load(handle)
 
     # parallel loop over modes
-    if manual_mode_cutoff > 0:
+    try:
         max_mode = manual_mode_cutoff + 1
+    except Exception:
+        pass
     results = Parallel(n_jobs=nslots)(delayed(read_and_project_mode)(m, N, Z, exp_array, kvecs, type_indices, method=filemethod) for m in range(mode_start, max_mode))
     all_modes = [x[0] for x in results]
     all_projections = [x[1] for x in results]
