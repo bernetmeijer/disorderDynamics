@@ -11,7 +11,8 @@ This code uses supercell eigenvector calculations in CASTEP format. These can be
 
 run the main program code/project.py in a terminal with:
 
-        <html>
-          <head>
-            <title>python project.py <CONFIGPATH> <NSLOTS> </title>
-          </head>
+        python project.py <CONFIGPATH> <NSLOTS>
+
+CONFIGPATH is the path to the config file of your system. An example is given for the toy system in toySystems/CsCl/config.ini. It contains paths to all input files and settings to run the projection code. 
+To run the toy system, please edit the paths on the config.ini to your local paths. 
+NSLOTS is the number of cores for the parallel utility.
