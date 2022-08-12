@@ -1,0 +1,5 @@
+TO DO:
+
+- add .got structure file of CsCl supercell
+- add .got structure file of CsCl unit cell
+- add eigenvectors of CsCl unit cell for the G-X path, so it can be plotted in euphonic.
