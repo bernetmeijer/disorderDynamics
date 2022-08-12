@@ -6,3 +6,12 @@ Disorder can be of any type: for example mass, force or configurational disorder
 This code is based on the paper by Overy et al.: https://onlinelibrary.wiley.com/doi/abs/10.1002/pssb.201600586.
 
 This code uses supercell eigenvector calculations in CASTEP format. These can be generated with the program GULP: https://gulp.curtin.edu.au/gulp/.
+
+## How to run main code
+
+run the main program code/project.py in a terminal with:
+
+        <html>
+          <head>
+            <title>python project.py <CONFIGPATH> <NSLOTS> </title>
+          </head>
