@@ -39,14 +39,14 @@ cellvecs_file = config['files']['cellvecs_file']
 outdir = config['files']['output_directory']
 
 # settings
-N = config['settings']['N']
-Z = config['settings']['Z']
-Zp = config['settings']['Z_unitcell']
+N = int(config['settings']['N'])
+Z = int(config['settings']['Z'])
+Zp = int(config['settings']['Z_unitcell'])
 MODE = config['settings']['cell_mode']  # primitive or conventional
-omegamax = config['settings']['omegamax']
-mode_start = config['settings']['mode_start']
+omegamax = float(config['settings']['omegamax'])
+mode_start = int(config['settings']['mode_start'])
 try:
-    manual_mode_cutoff = config['settings']['manual_mode_cutoff']  # up to and including this mode
+    manual_mode_cutoff = int(config['settings']['manual_mode_cutoff'])  # up to and including this mode
 except:
     print('no manual mode cutoff found - using omega max')
 
