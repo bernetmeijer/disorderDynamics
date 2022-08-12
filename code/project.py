@@ -1,5 +1,5 @@
 # PROJECT PHONON MODES OF SUPERCELL ONTO FIRST BZ OF UNIT CELL
-# HOW TO RUN: python project_sepcell_clean.py <CONFIGPATH> <NSLOTS>
+# HOW TO RUN: python project.py <CONFIGPATH> <NSLOTS>
 # CONFIGPATH = path to config.ini file of your system
 # NSLOTS = number of cores for parallel functionality
 
